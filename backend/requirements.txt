@@ -1,0 +1,12 @@
+fastapi==0.109.2
+uvicorn==0.27.1
+pydantic==2.6.1
+pydantic-settings==2.1.0
+langchain
+langchain-ollama
+langgraph
+SQLAlchemy==2.0.25
+asyncpg==0.29.0
+python-dotenv==1.0.1
+pyjwt==2.8.0
+passlib[bcrypt]==1.7.4
