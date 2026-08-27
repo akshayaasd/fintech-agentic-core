@@ -2,7 +2,7 @@
 
 ## Current Progress
 
-We are following a structured, phase-by-phase execution plan. As of right now, we have successfully completed **Phase 1** and **Phase 2**.
+We are following a structured, phase-by-phase execution plan. As of right now, we have successfully completed **Phase 1**, **Phase 2**, and **Phase 3**.
 
 ### Completed Phases
 
@@ -25,6 +25,13 @@ We are following a structured, phase-by-phase execution plan. As of right now, w
   - Created the **Frontend** environment:
     - Initialized a new Next.js application using `create-next-app` with Tailwind CSS, TypeScript, and ESLint.
     - Set up a premium dark-mode aesthetic foundation in `globals.css`.
+
+- **Phase 3: Backend & API Layer**
+  - Implemented request/response Pydantic schemas.
+  - Setup modular application configuration (`config.py`).
+  - Added custom centralized exception handlers (`errors.py`) to catch validation & domain-specific errors.
+  - Created initial `/api/chat` POST route returning structured mock responses.
+
 
 ---
 
@@ -52,8 +59,8 @@ The banking chatbot follows a decoupled, agent-oriented micro-architecture:
 
 ## Pending Next Steps
 
-We are now ready to begin **Phase 3: Backend & API Layer**, which will involve:
-1. Setting up request and response Pydantic schemas.
-2. Implementing the core `/chat` API endpoint.
-3. Configuring error handling and validation middleware.
-4. Setting up connection hooks to PostgreSQL.
+We are now ready to begin **Phase 4: Authentication & Authorization**, which will involve:
+1. Implementing the selected JWT/session authentication mechanism.
+2. Setting up user authentication routers and login endpoints.
+3. Securing API endpoints and establishing roles/permissions framework for agent interactions.
+
