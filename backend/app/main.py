@@ -11,6 +11,7 @@ from app.core.errors import (
     validation_exception_handler
 )
 from app.api.chat import router as chat_router
+from app.api.auth import router as auth_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -33,6 +34,7 @@ app.add_middleware(
 )
 
 # Register routers
+app.include_router(auth_router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
 app.include_router(chat_router, prefix=settings.API_V1_STR, tags=["chat"])
 
 @app.get("/")

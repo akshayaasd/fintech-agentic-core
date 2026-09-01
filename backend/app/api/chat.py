@@ -1,11 +1,15 @@
-from fastapi import APIRouter, status
-from app.api.schemas import ChatRequest, ChatResponse
+from fastapi import APIRouter, Depends, status
+from app.api.schemas import ChatRequest, ChatResponse, User
+from app.api.deps import get_current_active_user
 import uuid
 
 router = APIRouter()
 
 @router.post("/chat", response_model=ChatResponse, status_code=status.HTTP_200_OK)
-async def chat_endpoint(request: ChatRequest):
+async def chat_endpoint(
+    request: ChatRequest,
+    current_user: User = Depends(get_current_active_user)
+):
     """
     Handle chatbot messages.
     For Phase 3, this returns a structured mock response.

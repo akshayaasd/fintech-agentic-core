@@ -14,3 +14,17 @@ class ChatResponse(BaseModel):
     response: str = Field(..., description="The assistant's generated response")
     session_id: str = Field(..., description="The session identifier associated with the request/response")
     status: str = Field("success", description="Status of the request execution ('success', 'error')")
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenPayload(BaseModel):
+    sub: Optional[str] = None
+
+class User(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    disabled: Optional[bool] = None
+
