@@ -33,8 +33,12 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # LLM (Ollama)
+    LLM_PROVIDER: str = "ollama"
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     OLLAMA_MODEL: str = "qwen"
+    LLM_TEMPERATURE: float = 0.0
+    LLM_MAX_TOKENS: int = 1000
+    LLM_TIMEOUT_SECONDS: int = 30
 
     # Observability
     LANGCHAIN_TRACING_V2: bool = False
