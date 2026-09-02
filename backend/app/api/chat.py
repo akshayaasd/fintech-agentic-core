@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from app.api.schemas import ChatRequest, ChatResponse, User
 from app.api.deps import get_current_active_user
-from app.llm.factory import get_llm_provider
-from app.llm.prompts import get_chat_prompt_template
+from app.agent.graph import graph_app
 from langchain_core.messages import HumanMessage
 import uuid
 
@@ -15,28 +14,31 @@ async def chat_endpoint(
 ):
     """
     Handle chatbot messages.
-    For Phase 5, this returns a real LLM response from the configured provider (e.g., Ollama).
-    It will be integrated with the LangGraph orchestrator in Phase 6.
+    For Phase 6, this integrates the LangGraph orchestrator.
     """
     session_id = request.session_id or str(uuid.uuid4())
+    agent_used = "coordinator"
     
     try:
-        llm_provider = get_llm_provider()
-        prompt_template = get_chat_prompt_template()
-        
-        # We only pass the current message for now.
         # In Phase 10 (Session Store), we will fetch history based on session_id
-        messages = prompt_template.format_messages(messages=[HumanMessage(content=request.message)])
+        # For now, we just send the current message as a HumanMessage
+        inputs = {"messages": [HumanMessage(content=request.message)]}
         
-        response = await llm_provider.agenerate_response(messages)
-        reply_content = response.content
+        # Invoke the LangGraph application
+        result = await graph_app.ainvoke(inputs)
+        
+        # Extract the final message
+        final_message = result["messages"][-1].content
+        agent_used = result.get("next_agent", "general")
+        reply_content = final_message
     except Exception as e:
-        reply_content = f"I'm sorry, I encountered an error connecting to the LLM: {str(e)}"
+        reply_content = f"I'm sorry, I encountered an error in the orchestrator: {str(e)}"
+        agent_used = "error"
     
     return ChatResponse(
         session_id=session_id,
         reply=reply_content,
-        agent_used="llm_agent",
+        agent_used=agent_used,
         actions_taken=[],
         cost=0.0
     )
